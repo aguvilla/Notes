@@ -1,7 +1,9 @@
 const { request } = require('express')
 const express = require('express')
 const app = express()
+const cors = require('cors')
 
+app.use(cors())
 app.use(express.json())
 
 let notes = [
@@ -24,6 +26,7 @@ let notes = [
       important: true
     }
 ]
+app.use(express.static('build'))
 
 const generateId = () =>{
   const maxId = notes.length > 0
@@ -32,9 +35,7 @@ const generateId = () =>{
   return maxId + 1
 }
 
-app.get('/',(request,response) =>{
-    response.send('<h1>Hello World!</h1>')
-})
+
 app.get('/api/notes',(request,response) =>{
     response.json(notes)
 })
